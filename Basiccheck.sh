@@ -3,10 +3,18 @@ folderName=$1
 executable=$2
 currentLocation=~pwd
 
+if [ ! -f Makefile ]; then
+    echo "Makefile does not exist!"
+exit 7
+fi
+
 cd $folderName
 make
 secssesfullmake=$?
-if [ [$secssesfullMake == 0] ]; then
+
+
+
+if [ [ $secssesfullMake == 0 ] ]; then
 echo "Compilation- fail"
 exit 7
 fi
@@ -19,20 +27,23 @@ helgrindout=$?
 if [[ $"valgridgout" -ne 1 && $"helgrindout" -ne 1 ]]; then
 echo "Compilation- pass, Memory leaks- pass, thread race- pass" 
 exit 0 
+fi
 
-elif [[ $"valgridgout" -eq 1 && $"helgrindout" -ne 1 ]]; then
+if [[ $"valgridgout" -eq 1 && $"helgrindout" -ne 1 ]]; then
 echo "Compilation- pass, Memory leaks- fail, thread race- pass" 
 exit 2
+fi
 
 
-elif [[ $"valgridgout" -ne 1 && $"helgrindout" -eq 1 ]]; then
+if [[ $"valgridgout" -ne 1 && $"helgrindout" -eq 1 ]]; then
 echo "Compilation- pass, Memory leaks- pass, thread race- fail" 
 exit 1
+fi
 
-elif [[ $"valgridgout" -eq 1 && $"helgrindout" -eq 1 ]]; then
+if [[ $"valgridgout" -eq 1 && $"helgrindout" -eq 1 ]]; then
 echo "Compilation- pass, Memory leaks- fail, thread race- fail" 
 exit 3
 fi
 
-exit
+
 
