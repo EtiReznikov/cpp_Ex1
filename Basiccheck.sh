@@ -12,9 +12,9 @@ exit 7
 fi
 
 valgrind --leak-check=full --error-exitcode=1 ./$executable
-valgridgout=$7
+valgridgout=$?
 valgrind --tool=helgrind --error-exitcode=1 ./$executable
-helgrindout=$7
+helgrindout=$?
 
 if [[ $"valgridgout" -ne 1 && $"helgrindout" -ne 1 ]]; then
 echo "Compilation- pass, Memory leaks- pass, thread race- pass" 
