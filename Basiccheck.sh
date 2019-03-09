@@ -4,7 +4,7 @@ executable=$2
 currentLocation=~pwd
 
 if [ ! -f Makefile ]; then
-    echo "Makefile does not exist!"
+echo "Makefile does not exist!"
 exit 7
 fi
 
@@ -15,33 +15,37 @@ secssesfullmake=$?
 
 
 if [ [ $secssesfullMake == 0 ] ]; then
-echo "Compilation- fail"
+echo "Compilation"
+echo "   fail"
 exit 7
 fi
 
-valgrind --leak-check=full --error-exitcode=1 ./$executable
+valgrind --leak-check=full --error-exitcode=3 ./$executable
 valgridgout=$?
-valgrind --tool=helgrind --error-exitcode=1 ./$executable
+valgrind --tool=helgrind  ./$executable
 helgrindout=$?
 
-if [[ $"valgridgout" -ne 1 && $"helgrindout" -ne 1 ]]; then
-echo "Compilation- pass, Memory leaks- pass, thread race- pass" 
-exit 0 
+
+
+echo "Compilation| Memory leaks| thread race" 
+
+if [[ $valgridgout -ne 3 && $helgrindout -eq 0 ]]; then
+echo "    pass   |     pass    |     pass   " 
+exit 0
 fi
 
-if [[ $"valgridgout" -eq 1 && $"helgrindout" -ne 1 ]]; then
-echo "Compilation- pass, Memory leaks- fail, thread race- pass" 
-exit 2
-fi
-
-
-if [[ $"valgridgout" -ne 1 && $"helgrindout" -eq 1 ]]; then
-echo "Compilation- pass, Memory leaks- pass, thread race- fail" 
+if [[ $valgridgout -eq 3 && $helgrindout -eq 0 ]]; then
+echo "    pass   |     fail    |     pass   " 
 exit 1
 fi
 
-if [[ $"valgridgout" -eq 1 && $"helgrindout" -eq 1 ]]; then
-echo "Compilation- pass, Memory leaks- fail, thread race- fail" 
+if [[ $valgridgout -ne 3 && $helgrindout -ne 0 ]]; then
+echo "    pass   |     pass    |     fail   " 
+exit 2
+fi
+
+if [[ $valgridgout -eq 3 && $helgrindout -ne 0 ]]; then
+echo "    pass   |     fail    |     fail   " 
 exit 3
 fi
 
