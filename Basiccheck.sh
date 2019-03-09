@@ -1,7 +1,6 @@
 #!/bin/bash
 folderName=$1
 executable=$2
-currentLocation=~pwd
 
 if [ ! -f Makefile ]; then
 echo "Makefile does not exist!"
@@ -12,11 +11,8 @@ cd $folderName
 make
 secssesfullmake=$?
 
-
-
 if [ $secssesfullMake -eq 0 ]; then
-echo "Compilation"
-echo "   fail"
+echo "Compilation fail"
 exit 7
 fi
 
