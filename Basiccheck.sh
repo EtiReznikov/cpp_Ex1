@@ -1,3 +1,6 @@
+# Estar reznikov 315674028 
+# Yaara goldenberg 308529296
+
 #!/bin/bash
 folderName=$1
 executable=$2
