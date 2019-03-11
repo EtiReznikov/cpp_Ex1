@@ -18,9 +18,9 @@ cd $currentfolder
 exit 7
 fi
 
-valgrind --leak-check=full --error-exitcode=3  ./$executable @$2 >/dev/null 2>/dev/null
+valgrind --leak-check=full --error-exitcode=3  ./$executable 
 valgridgout=$?
-valgrind --tool=helgrind --error-exitcode=3 ./$executable @$2 >/dev/null 2>/dev/null
+valgrind --tool=helgrind --error-exitcode=3 ./$executable 
 helgrindout=$?
 
 echo "Compilation| Memory leaks| thread race" 
