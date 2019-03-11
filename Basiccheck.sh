@@ -8,6 +8,9 @@ folderName=$1
 executable=$2
 currentfolder=$(pwd)
 
+exit 0
+
+
 cd $folderName
 make
 secssesfullmake=$?
