@@ -2,8 +2,7 @@
 
 #!/bin/bash
 
-#Ester Reznikov 315674028
-#Yaara Goldenberg 308529296
+
 folderName=$1
 executable=$2
 currentfolder=$(pwd)
