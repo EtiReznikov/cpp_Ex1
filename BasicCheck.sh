@@ -18,14 +18,14 @@ cd $folderName
 
 if [ -f Makefile ]; then
 
-make > /dev/null 2&>1
-secssesfullmake=$?
-echo "secssesfullmake $secssesfullmake"
+make > /dev/null 2>&1
+failedmake=$?
+echo "secssesfullmake $failedmake"
 
-if [[ $secssesfullmake -ne 0 ]]; then
-valgrind --leak-check=full --error-exitcode=1  ./$executable "${@:2}" > /dev/null 2&>1
+if [[ $failedmake -eq 0 ]]; then
+valgrind --leak-check=full --error-exitcode=1  ./$executable "${@:2}" > /dev/null 2>&1
   valgridgout=$?
-valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:2}"> /dev/null 2&>1
+valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:2}"> /dev/null 2>&1
   helgrindout=$?
 
    if [[ $valgridgout -ne 1 && $helgrindout -ne 1 ]]; then
@@ -62,7 +62,7 @@ fi
 cd $currentfolder
 echo "Compilation| Memory leaks| thread race" 
 echo "    "$Compliation"   |     "$Memory_leaks"    |     "$Thread_race"   " 
-echo "secssesfullmake $secssesfullmake"
+echo "secssesfullmake $failedmake"
 echo "ans $ans"
 exit $ans
 
