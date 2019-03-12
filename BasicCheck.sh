@@ -58,7 +58,6 @@ valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:2}"> /dev/null 2&
  fi
 fi
 cd $currentfolder
-echo $ans
 echo "Compilation| Memory leaks| thread race" 
 echo "    "$Compliation"   |     "$Memory_leaks"    |     "$Thread_race"   " 
 exit $ans
