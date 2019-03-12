@@ -13,13 +13,11 @@ Compliation="FAIL"
 Memory_leaks="FAIL"
 Thread_race="FAIL"
 
+cd $folderName
+
 if [ -f Makefile ]; then
 
-
-
-
-cd $folderName
-make 
+make > /dev/null 2&>1
 secssesfullmake=$?
 
 if [[ $secssesfullMake -eq 0 ]]; then
