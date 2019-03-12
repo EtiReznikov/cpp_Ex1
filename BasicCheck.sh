@@ -8,7 +8,6 @@ executable=$2
 currentfolder=$(pwd)
 
 ans=7
-echo "ans $ans"
 
 Compliation="FAIL"
 Memory_leaks="FAIL"
@@ -16,11 +15,10 @@ Thread_race="FAIL"
 
 cd $folderName
 
-if [ -f Makefile ]; then
+#if [ -f Makefile ]; then
 
 make > /dev/null 2>&1
 failedmake=$?
-echo "secssesfullmake $failedmake"
 
 if [[ $failedmake -eq 0 ]]; then
 valgrind --leak-check=full --error-exitcode=1  ./$executable "${@:2}" > /dev/null 2>&1
@@ -57,13 +55,11 @@ valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:2}"> /dev/null 2>
    
   fi
 
- fi
+ #fi
 fi
 cd $currentfolder
 echo "Compilation| Memory leaks| thread race" 
 echo "    "$Compliation"   |     "$Memory_leaks"    |     "$Thread_race"   " 
-echo "secssesfullmake $failedmake"
-echo "ans $ans"
 exit $ans
 
 
