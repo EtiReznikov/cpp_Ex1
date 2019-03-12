@@ -7,19 +7,17 @@ folderName=$1
 executable=$2
 currentfolder=$(pwd)
 
-
 ans=7
-echo $ans
 
 Compliation="FAIL"
 Memory_leaks="FAIL"
 Thread_race="FAIL"
 
 cd $folderName
-make
+make > /dev/null 2&>1
 secssesfullmake=$?
 
-if [[ $secssesfullMake -eq 0 ]]; then
+if [[ $secssesfullMake -ne 0 ]]; then
 valgrind --leak-check=full --error-exitcode=1  ./$executable "${@:2}" > /dev/null 2&>1
   valgridgout=$?
 valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:2}"> /dev/null 2&>1
