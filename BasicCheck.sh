@@ -20,7 +20,7 @@ if [ -f Makefile ]; then
 make > /dev/null 2&>1
 secssesfullmake=$?
 
-if [[ $secssesfullMake -eq 0 ]]; then
+if [[ $secssesfullmake -ne 0 ]]; then
 valgrind --leak-check=full --error-exitcode=1  ./$executable "${@:2}" > /dev/null 2&>1
   valgridgout=$?
 valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:2}"> /dev/null 2&>1
