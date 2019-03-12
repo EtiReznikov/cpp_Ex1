@@ -15,8 +15,6 @@ Thread_race="FAIL"
 
 cd $folderName
 
-#if [ -f Makefile ]; then
-
 make > /dev/null 2>&1
 failedmake=$?
 
@@ -54,8 +52,6 @@ valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:2}"> /dev/null 2>
     ans=3
    
   fi
-
- #fi
 fi
 cd $currentfolder
 echo "Compilation| Memory leaks| thread race" 
