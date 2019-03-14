@@ -20,9 +20,9 @@ make > /dev/null 2>&1
 failedmake=$?
 
 if [[ $failedmake -eq 0 ]]; then
-valgrind --leak-check=full --error-exitcode=1  ./$executable "${@:2}" > /dev/null 2>&1
+valgrind --leak-check=full --error-exitcode=1  ./$executable "${@:3}" > /dev/null 2>&1
   valgridgout=$?
-valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:2}"> /dev/null 2>&1
+valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:3}"> /dev/null 2>&1
   helgrindout=$?
 
    if [[ $valgridgout -ne 1 && $helgrindout -ne 1 ]]; then
