@@ -1,6 +1,6 @@
 
-#315674028
-#308529296
+#315674028 Ester Reznikov
+#308529296 Yaara Goldenberg
 #!/bin/bash
 
 
@@ -18,35 +18,36 @@ cd $folderName
 
 make > /dev/null 2>&1
 failedmake=$?
-
+#Check if the MakeFile is exists and if it is compiled
 if [[ $failedmake -eq 0 ]]; then
 valgrind --leak-check=full --error-exitcode=1  ./$executable "${@:3}" > /dev/null 2>&1
-  valgridgout=$?
+  valgrindgout=$?
 valgrind --tool=helgrind --error-exitcode=1 ./$executable "${@:3}"> /dev/null 2>&1
   helgrindout=$?
 
-   if [[ $valgridgout -ne 1 && $helgrindout -ne 1 ]]; then
+#Check if valgrind and helgrind pass
+   if [[ $valgrindgout -ne 1 && $helgrindout -ne 1 ]]; then
     Compliation="PASS"
     Memory_leaks="PASS"
     Thread_race="PASS"
     ans=0
    
-
-   elif [[ $valgridgout -eq 1 && $helgrindout -ne 1 ]]; then
+#Check if valgrind pass and helgrind failed
+   elif [[ $valgrindgout -eq 1 && $helgrindout -ne 1 ]]; then
     Compliation="PASS"
     Memory_leaks="FAIL"
     Thread_race="PASS"
     ans=2
    
-
-   elif [[ $valgridgout -ne 1 && $helgrindout -eq 1 ]]; then
+#Check if valgrind failed and helgrind pass
+   elif [[ $valgrindgout -ne 1 && $helgrindout -eq 1 ]]; then
     Compliation="PASS"
     Memory_leaks="PASS"
     Thread_race="FAIL"
     ans=1
    
-
-   elif [[ $valgridgout -eq 1 && $helgrindout -eq 1 ]]; then
+#Check if valgrind and helgrind failed
+   elif [[ $valgrindgout -eq 1 && $helgrindout -eq 1 ]]; then
     Compliation="PASS"
     Memory_leaks="FAIL"
     Thread_race="FAIL"
